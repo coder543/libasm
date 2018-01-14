@@ -5,7 +5,7 @@ authors = ["Josh Leverette <coder543@gmail.com>"]
 license = "MIT"
 repository = "https://github.com/coder543/libasm"
 description = "libasm adds inline assembly to stable rust"
-tags = ["assembly", "asm", "stable"]
+keywords = ["assembly", "asm", "stable"]
 
 [dependencies]
 syn = { version = "0.12.5", features = ["full", "extra-traits", "visit"] }
