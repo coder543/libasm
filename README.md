@@ -12,7 +12,7 @@ fn main() {
 }
 ```
 
-Ths is an example `main.rs`:
+[This is an example project:](https://github.com/coder543/asmtest)
 
 ```rust
 #[macro_use]
