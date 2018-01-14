@@ -91,33 +91,17 @@ pub fn extract_impl(name: String, asm: &mut Peekable<TokenTreeIter>) -> Asm {
     Asm { name, ret, body }
 }
 
-pub fn extract_asm(asm: TokenStream) -> Option<Asm> {
+pub fn extract_asm(asm: TokenStream) {
     let asm = &mut asm.into_iter().peekable();
     let target = "\"".to_string() + &::std::env::var("TARGET").unwrap() + "\"";
-    let mut fn_name = None;
-    let mut ret_val = None;
 
     while asm.peek().is_some() {
         let impl_target = get_next(asm);
         expect(asm, "fn");
         let name = get_next(asm);
-        if fn_name == None {
-            fn_name = Some(name.clone());
-        } else {
-            if fn_name != Some(name.clone()) {
-                panic!(
-                    "a single lasm! block must contain only one function, yet {} is not the same as {}",
-                    fn_name.unwrap(),
-                    name
-                );
-            }
-        }
         let asm = extract_impl(name, asm);
         if impl_target == target {
-            assert_eq!(ret_val, None);
-            ret_val = Some(asm);
+            asm.generate();
         }
     }
-
-    ret_val
 }

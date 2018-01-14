@@ -46,7 +46,7 @@ pub fn parse_file(code: String) {
             Item::Macro(macro_item) => {
                 let mac = macro_item.mac;
                 if mac.path == "lasm".into() {
-                    extract_asm(mac.tts).map(|x| x.generate());
+                    extract_asm(mac.tts);
                 }
             }
             _ => {}
