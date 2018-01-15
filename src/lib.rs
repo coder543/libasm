@@ -35,7 +35,6 @@ macro_rules! lasm {
 #[derive(Clone, Debug, PartialEq)]
 pub struct Asm {
     pub name: String,
-    pub ret: Option<String>,
     pub body: Vec<String>,
 }
 

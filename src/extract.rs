@@ -72,23 +72,11 @@ fn expect_body(iter: &mut Peekable<TokenTreeIter>) -> Vec<String> {
     }
 }
 
-pub fn extract_impl(name: String, asm: &mut Peekable<TokenTreeIter>) -> Asm {
-    let next = asm.next().expect("expected more").kind;
-    let (ret, body) = match next {
-        TokenNode::Op('-', _) => {
-            expect(asm, ">");
-            let ret = get_next(asm);
-            (Some(ret), expect_body(asm))
-        }
-        TokenNode::Group(d, stream) => {
-            assert_eq!(d, Delimiter::Brace);
-            let mut stream = stream.into_iter().peekable();
-            (None, get_body(&mut stream))
-        }
-        _ => panic!("body was missing!"),
-    };
-
-    Asm { name, ret, body }
+pub fn extract_impl(asm: &mut Peekable<TokenTreeIter>) -> Asm {
+    expect(asm, "fn");
+    let name = get_next(asm);
+    let body = expect_body(asm);
+    Asm { name, body }
 }
 
 pub fn extract_asm(asm: TokenStream) {
@@ -97,9 +85,7 @@ pub fn extract_asm(asm: TokenStream) {
 
     while asm.peek().is_some() {
         let impl_target = get_next(asm);
-        expect(asm, "fn");
-        let name = get_next(asm);
-        let asm = extract_impl(name, asm);
+        let asm = extract_impl(asm);
         if impl_target == target {
             asm.generate();
         }

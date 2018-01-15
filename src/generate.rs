@@ -9,12 +9,6 @@ use super::Asm;
 impl Asm {
     #[cfg(unix)]
     pub fn generate(&self) {
-        if let Some(ref ret) = self.ret {
-            if ret != "%rax" {
-                panic!("for now, the return argument for an assembly function must be %rax.");
-            }
-        }
-
         let out_dir = env::var("OUT_DIR").unwrap();
         let path = PathBuf::from(out_dir).join(self.name.clone() + ".S");
         let mut output = File::create(&path).unwrap();
@@ -34,12 +28,6 @@ impl Asm {
 
     #[cfg(not(unix))]
     pub fn generate(&self) {
-        if let Some(ref ret) = self.ret {
-            if ret != "rax" {
-                panic!("for now, the return argument for an assembly function must be %rax.");
-            }
-        }
-
         let out_dir = env::var("OUT_DIR").unwrap();
         let path = PathBuf::from(out_dir).join(self.name.clone() + ".asm");
         let mut output = File::create(&path).unwrap();
