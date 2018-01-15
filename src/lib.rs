@@ -15,16 +15,6 @@ use std::env;
 
 #[macro_export]
 macro_rules! lasm {
-    ($abi:tt fn $name:tt -> %$ret:tt {
-        $($dontcare:tt)*
-    } $($more:tt)*) => (lasm!($($more)*););
-    ($abi:tt fn $name:tt {
-        $($dontcare:tt)*
-    } $($more:tt)*) => (lasm!($($more)*););
-
-    ($abi:tt fn $name:tt -> $ret:tt {
-        $($dontcare:tt)*
-    } $($more:tt)*) => (lasm!($($more)*););
     ($abi:tt fn $name:tt {
         $($dontcare:tt)*
     } $($more:tt)*) => (lasm!($($more)*););
