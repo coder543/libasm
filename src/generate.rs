@@ -7,7 +7,7 @@ use cc;
 use super::Asm;
 
 impl Asm {
-    #[cfg(unix)]
+    #[cfg(not(windows))]
     pub fn generate(&self) {
         let out_dir = env::var("OUT_DIR").unwrap();
         let path = PathBuf::from(out_dir).join(self.name.clone() + ".S");
@@ -26,7 +26,7 @@ impl Asm {
         cc::Build::new().file(&path).compile(&self.name.clone());
     }
 
-    #[cfg(not(unix))]
+    #[cfg(windows)]
     pub fn generate(&self) {
         let out_dir = env::var("OUT_DIR").unwrap();
         let path = PathBuf::from(out_dir).join(self.name.clone() + ".asm");
