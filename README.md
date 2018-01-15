@@ -20,13 +20,13 @@ extern crate libasm;
 
 lasm! {
     "x86_64-unknown-linux-gnu"
-    fn add2 -> %rax {
+    fn add2 {
         mov %rax, %rdi
         add %rax, %rsi
     }
 
     "x86_64-pc-windows-msvc"
-    fn add2 -> rax {
+    fn add2 {
         mov rax, rcx
         add rax, rdx
     }
